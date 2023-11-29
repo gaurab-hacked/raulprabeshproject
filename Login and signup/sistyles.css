@@ -1,0 +1,118 @@
+/* Global styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    /* background-color: #fff; */
+    background: transparent;
+    font-family: 'Montserrat', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Sign up box styles */
+.signup-box {
+    border-radius: 20px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+    width: 400px;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: transparent(10%);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(96, 96, 96, 0.5);
+    border-radius: 20px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+}
+
+.signup-box h1 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.form {
+    width: 100%;
+}
+
+
+/* input field styles */
+.input-field {
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid #ccc;
+    padding: 15px;
+    margin: 5px;
+    font-size: 16px;
+    color: #333;
+    background-color: transparent;
+  }
+/* input field focus styles */
+.input-field:focus {
+    outline: none;
+    border-color: #000000;
+}
+.signup-form input[type="password"] {
+    position: relative;
+}
+
+.signup-form .password-container {
+    display: flex;
+    align-items: center;
+}
+
+.signup-form button {
+    display:flex;
+    position: center;
+    margin: auto;
+    margin-top: 10px;
+    background-color: #000000;
+    border: none;
+    color: #fff;
+    font-size: 1.1rem;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.signup-form button:hover {
+    transform: scale(1.1);
+  box-shadow: 0 0 15px #000000;
+}
+
+.signup-form input[type="password"],
+.signup-form button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+/* Media queries */
+@media screen and (max-width: 768px) {
+    .signup-box {
+        width: 90%;
+        padding: 40px;
+    }
+    .signup-box h1 {
+        font-size: 24px;
+    }
+    .signup-form input[type="text"],
+    .signup-form input[type="number"],
+    .signup-form input[type="email"],
+    .signup-form input[type="password"] {
+        padding: 12px;
+        font-size: 14px;
+    }
+    .signup-form button {
+        padding: 12px 20px;
+        font-size: 14px;
+    }
+}
