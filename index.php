@@ -5,14 +5,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sahaj-Subidha</title>
-  <link rel="stylesheet" href="dex.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
   <!-- For Logo and nav menu -->
   <header class="header">
     <div class="logo">
-    <a href="./index.php"><img src="./Logo/asd.png" alt="Logo: Sahaj-Subidha"></a>
+      <a href="./index.php"><img src="./Logo/asd.png" alt="Logo: Sahaj-Subidha"></a>
     </div>
 
     <!-- menu -->
@@ -29,7 +29,7 @@
           </div>
         </li>
         <li><a href="./index.php">Contact</a></li>
-        <li><a href="./Login and signup/1login.php">Login</a></li>
+        <li><a href="./auth/login.php">Login</a></li>
       </ul>
     </nav>
 
@@ -47,37 +47,39 @@
   </div>
   <section class="gallery">
     <div class="item">
-      <a href="./Services/homeservice.php">  
-      <img src="./Pictures/pexels-liliana-drew-9462302.jpg" alt="Image 1">
+      <a href="./Services/homeservice.php">
+        <img src="./Pictures/pexels-liliana-drew-9462302.jpg" alt="Image 1">
         <h2>Home Services</h2>
-        <p style="text-decoration: none !important; color: black;">Cleaning home services refer to professional cleaning services provided to individuals or households to
+        <p style="text-decoration: none !important; color: black;">Cleaning home services refer to professional cleaning
+          services provided to individuals or households to
           maintain cleanliness and hygiene within their homes.
           These services typically involve trained and experienced cleaners who visit homes on a scheduled or as-needed
           basis to perform a range of cleaning tasks.</p>
     </div>
-  </a>
+    </a>
 
     <div class="item">
-      <a href="./Services/officeservice.php">  
-      <img src="./Pictures/john-schnobrich-2FPjlAyMQTA-unsplash.jpg" alt="Image 2">
-      <h2>Office Services</h2>
-      <p>Office services play a vital role in supporting the efficient functioning of office spaces. They encompass a
-        range of administrative, facility management, IT support, and other services that contribute to the smooth
-        operation of an office, enabling employees to work productively and creating a professional environment for all
-        stakeholders.</p>
+      <a href="./Services/officeservice.php">
+        <img src="./Pictures/john-schnobrich-2FPjlAyMQTA-unsplash.jpg" alt="Image 2">
+        <h2>Office Services</h2>
+        <p>Office services play a vital role in supporting the efficient functioning of office spaces. They encompass a
+          range of administrative, facility management, IT support, and other services that contribute to the smooth
+          operation of an office, enabling employees to work productively and creating a professional environment for
+          all
+          stakeholders.</p>
     </div>
     </a>
 
     <div class="item">
       <a href="./Services/emergencyservice.php">
-      <img src="./Pictures/pexels-erik-mclean-7708636.jpg" alt="Image 3">
-      <h2>Emergency Services</h2>
-      <p>Emergency services are crucial in ensuring public safety, minimizing harm, and providing timely assistance
-        during critical situations.These services require highly trained professionals, specialized equipment, and
-        effective communication and collaboration among various agencies to provide efficient and effective emergency
-        responses.</p>
+        <img src="./Pictures/pexels-erik-mclean-7708636.jpg" alt="Image 3">
+        <h2>Emergency Services</h2>
+        <p>Emergency services are crucial in ensuring public safety, minimizing harm, and providing timely assistance
+          during critical situations.These services require highly trained professionals, specialized equipment, and
+          effective communication and collaboration among various agencies to provide efficient and effective emergency
+          responses.</p>
     </div>
-</a>
+    </a>
   </section>
   <!-- copyright -->
   <footer>
