@@ -1,3 +1,209 @@
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "prabeshraul";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
+// !======================= Initial variable setup =======================
+$categoryId = "";
+$subcategoryId = "";
+$productId = "";
+$title = "";
+$description = "";
+
+
+// !======================= UPDATE Operation =======================
+if (isset($_GET['edit'])) {
+  $editId = $_GET['edit'];
+  $sqlEditOne = "SELECT * FROM producttable WHERE id = $editId";
+  $resultEditOne = $conn->query($sqlEditOne);
+  if ($resultEditOne->num_rows > 0) {
+    $row = $resultEditOne->fetch_assoc();
+    $categoryId = $row["categoryid"];
+    $subcategoryId = $row["subcategoryid"];
+    $productId = $row["id"];
+    $title = $row["name"];
+    $description = $row["description"];
+  }
+}
+if (isset($_POST['updateProduct'])) {
+  $categoryId = $_POST["category"];
+  $subcategoryId = $_POST["subcategory"];
+  $productName = $_POST["productName"];
+  $productDescription = $_POST["productDescription"];
+  $userId = 1;
+  $idToUpdate = $_POST['updateid'];
+
+  // File upload handling
+  if (!empty($_FILES["image"]["name"])) {
+    $targetDirectory = "uploads/";
+    if (!file_exists($targetDirectory)) {
+      mkdir($targetDirectory, 0755, true);
+    }
+    $targetFile = $targetDirectory . basename($_FILES["image"]["name"]);
+    $uploadOk = 1;
+    $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+
+    $check = getimagesize($_FILES["image"]["tmp_name"]);
+    if ($check === false) {
+      echo "File is not an image.";
+      $uploadOk = 0;
+    }
+
+    if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
+      echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+      $uploadOk = 0;
+    }
+
+    if ($uploadOk == 0) {
+      echo "Sorry, your file was not uploaded.";
+    } else {
+      if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile)) {
+        // Image uploaded successfully, update both product and subcategory
+        $imagePath = $targetFile;
+        $sqlUpdateProduct = "UPDATE producttable SET categoryId='$categoryId', subcategoryId='$subcategoryId', name='$productName', description='$productDescription', image='$imagePath', userId='$userId' WHERE id=$idToUpdate";
+
+        if ($conn->query($sqlUpdateProduct) === TRUE) {
+          // echo "Record updated successfully";
+          header("Location: ./products.php");
+        } else {
+          echo "Error updating record: " . $conn->error;
+        }
+      } else {
+        echo "Sorry, there was an error uploading your file.";
+      }
+    }
+  } else {
+    // No new image provided, update only product data
+    $sqlUpdateProduct = "UPDATE producttable SET categoryId='$categoryId', subcategoryId='$subcategoryId', name='$productName', description='$productDescription', userId='$userId' WHERE id=$idToUpdate";
+
+    if ($conn->query($sqlUpdateProduct) === TRUE) {
+      // echo "Record updated successfully";
+      header("Location: ./products.php");
+    } else {
+      echo "Error updating record: " . $conn->error;
+    }
+  }
+}
+
+// !======================= DELETE Operation =======================
+if (isset($_GET['delete'])) {
+  $idToDelete = $_GET['delete'];
+  $sql = "DELETE FROM producttable WHERE id=$idToDelete";
+
+  if ($conn->query($sql) === TRUE) {
+    header("Location: ./products.php");
+    // echo "Record deleted successfully";
+  } else {
+    echo "Error deleting record: " . $conn->error;
+  }
+}
+
+
+// !======================= READ Operation =======================
+// ?======== for category ============
+$sqlCategory = "SELECT id, category, date FROM category";
+$resultCategory = $conn->query($sqlCategory);
+
+// ?======== for subcategory ============
+$sqlsubcategory = "
+SELECT
+c.category AS category,
+c.id AS categoryId,
+s.subcategory AS subcategory,
+s.date AS date,
+s.id AS id
+FROM
+subcategory AS s
+JOIN
+category AS c ON s.categoryId = c.id
+        ";
+$resultsubcategory = $conn->query($sqlsubcategory);
+
+
+// ?======== for product ============
+// Your SQL query
+$sqlProduct = "SELECT c.category AS category, c.id AS categoryId, s.subcategory AS subcategory, s.id AS subcategoryId,
+                      p.id AS productId, p.name AS productName, p.description AS productDescription, 
+                      p.isOrdered, p.image, p.date, p.userId, p.id AS id
+                      FROM
+    producttable AS p
+LEFT JOIN
+    category AS c ON c.id = p.categoryId
+LEFT JOIN
+    subcategory AS s ON s.id = p.subcategoryId
+    ";
+
+// Perform the query
+$resultProduct = $conn->query($sqlProduct);
+
+// !======================= CREATE Operation =======================
+// Create Product
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["createProduct"])) {
+  $categoryId = $_POST["category"];
+  $subcategoryId = $_POST["subcategory"];
+  $productName = $_POST["productName"];
+  $productDescription = $_POST["productDescription"];
+  $userId = 1; // Replace with the actual user ID or implement user authentication
+
+  // File upload handling
+  if (isset($_FILES["image"])) {
+    $targetDirectory = "uploads/";
+    if (!file_exists($targetDirectory)) {
+      mkdir($targetDirectory, 0755, true);
+    }
+    $targetFile = $targetDirectory . basename($_FILES["image"]["name"]);
+    $uploadOk = 1;
+    $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+
+
+    $check = getimagesize($_FILES["image"]["tmp_name"]);
+    if ($check !== false) {
+      $uploadOk = 1;
+    } else {
+      echo "File is not an image.";
+      $uploadOk = 0;
+    }
+
+    if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
+      echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+      $uploadOk = 0;
+    }
+
+    if ($uploadOk == 0) {
+      echo "Sorry, your file was not uploaded.";
+    } else {
+      if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile)) {
+        $imagePath = $targetFile;
+        $sqlCreateProduct = "INSERT INTO producttable (categoryId, subcategoryId, name, description, image, userId) VALUES ('$categoryId', '$subcategoryId', '$productName', '$productDescription', '$imagePath', '$userId')";
+
+        if ($conn->query($sqlCreateProduct) === TRUE) {
+          // echo "Product created successfully";
+          header("Location: ./products.php");
+        } else {
+          echo "Error creating product: " . $conn->error;
+        }
+      } else {
+        echo "Sorry, there was an error uploading your file.";
+      }
+    }
+  } else {
+    echo "Please select an image file.";
+  }
+}
+
+
+
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -65,22 +271,27 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>This is Title</td>
-              <td>This is description i like.</td>
-              <td><img style="height: 35px; width: 35px; border-radius: 5px; object-fit: cover;"
-                  src="https://m.media-amazon.com/images/M/MV5BYWYyZmNiOTEtODY0Zi00ZDNiLTlhZmMtMzE2Mzk5NGMwYzhlXkEyXkFqcGdeQXVyOTkwNTM4MTk@._V1_.jpg"
-                  alt=""></td>
-              <td>Gaurab</td>
-              <td>Sunar</td>
-              <td><a href="#">
-                  <?php include "./svg/edit.svg" ?>
-                </a></td>
-              <td><a href="#">
-                  <?php include "./svg/delete.svg" ?>
-                </a></td>
-            </tr>
+            <?php
+            if ($resultProduct->num_rows > 0) {
+              $serialNumber = 1;
+              while ($row = $resultProduct->fetch_assoc()) {
+                echo '
+        <tr>
+            <td>' . $serialNumber++ . '</td>
+            <td>' . $row['productName'] . '</td>
+            <td>' . $row['productDescription'] . '</td>
+            <td><img style="height: 35px; width: 35px; border-radius: 5px; object-fit: cover;"
+                     src="http://localhost/SahajSubidha/dashboard/' . $row['image'] . '"
+                     alt="' . $row['productName'] . '"></td>
+            <td>' . $row['category'] . '</td>
+            <td>' . ($row['subcategory'] !== null ? $row['subcategory'] : '-') . '</td>
+            <td><a href="?edit=' . $row['id'] . '" onclick="ModalOpen()">' . file_get_contents("./svg/edit.svg") . '</a></td>
+            <td><a href="?delete=' . $row['id'] . '">' . file_get_contents("./svg/delete.svg") . '</a></td>
+        </tr>';
+              }
+            }
+            ?>
+
           </tbody>
         </table>
       </div>
@@ -97,29 +308,49 @@
           </div>
           <hr />
           <div id="modalBody">
-            <form action="#">
+            <form action="./products.php" method="post" enctype="multipart/form-data">
               <div class="flex">
-                <select name="category" id="categoryDropDOwn">
+                <select name="category" id="categoryDropDOwn" onchange="filterSubcategories(this.value)">
                   <option value="null">Select Category</option>
-                  <option value="1">Gaurab</option>
-                  <option value="1">Rahul</option>
-                  <option value="1">Prabesh</option>
+                  <?php
+                  if ($resultCategory->num_rows > 0) {
+                    while ($row = $resultCategory->fetch_assoc()) {
+                      $selected = ($row['id'] == $categoryId) ? 'selected' : '';
+                      echo '<option value="' . $row['id'] . '" ' . $selected . '>' . $row['category'] . '</option>';
+                    }
+                  }
+                  ?>
                 </select>
-                <select name="Subcategory" id="subcategoryDropDOwn">
+
+                <select name="subcategory" id="subcategoryDropDOwn">
                   <option value="null">Select Subcategory</option>
-                  <option value="1">Sunar</option>
-                  <option value="1">Tuladhar</option>
-                  <option value="1">Pudasaini</option>
+                  <?php
+                  if ($resultsubcategory->num_rows > 0) {
+                    while ($row = $resultsubcategory->fetch_assoc()) {
+                      $selected = ($row['id'] == $subcategoryId) ? 'selected' : '';
+                      echo '<option class="subcategory-option" data-category-id="' . $row['categoryId'] . '" value="' . $row['id'] . '" ' . $selected . '>' . $row['subcategory'] . '</option>';
+                    }
+                  }
+
+                  ?>
                 </select>
               </div>
+              <input type="hidden" name="updateid" id="" value="<?php echo htmlspecialchars($productId); ?>">
               <div class="flex">
-                <input type="text" name="productName" id="product" placeholder="Product Name" />
-                <input type="file" name="productImage" id="product" placeholder="product Image" />
+                <input type="text" name="productName" id="product" placeholder="Product Title"
+                  value="<?php echo htmlspecialchars($title); ?>" />
+                <input type="file" name="image" id="image" accept=".jpg, .jpeg, .png" placeholder="Product Image" />
               </div>
-              <textarea name="productDescription" id="description" cols="30" rows="8"></textarea>
+              <textarea name="productDescription" id="description" cols="30"
+                rows="8"><?php echo htmlspecialchars($description); ?></textarea>
+
               <div id="FormButtons">
                 <button type="reset" id="resetContent">Reset</button>
-                <button type="submit" id="postContent">Post</button>
+                <?php echo !isset($_GET['edit']) ? '
+                <button type="submit" id="postContent" name="createProduct">Post</button>
+                ' : '
+                <button type="submit" id="postContent" name="updateProduct">Update</button>
+                ' ?>
               </div>
             </form>
           </div>
@@ -129,19 +360,41 @@
   </div>
   <script>
     const modalHiddenBlock = document.getElementById("modalHiddenBlock");
+
     const ModalOpen = () => {
-      if (
-        modalHiddenBlock.style.display === "" ||
-        modalHiddenBlock.style.display === "none"
-      ) {
+      if (modalHiddenBlock.style.display === "" || modalHiddenBlock.style.display === "none") {
         modalHiddenBlock.style.display = "block";
       } else {
         modalHiddenBlock.style.display = "none";
       }
     };
+
     const closeModal = () => {
       modalHiddenBlock.style.display = "none";
+      const urlParams = new URLSearchParams(window.location.search);
+      urlParams.delete('edit');
+
+      const newUrl = window.location.pathname + '?' + urlParams.toString();
+      history.replaceState({}, document.title, newUrl);
+      location.reload();
     };
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const editParam = urlParams.get('edit');
+
+    if (editParam) {
+      ModalOpen();
+    }
+    function filterSubcategories(id) {
+      var subcategoryOptionsArray = [...document.querySelectorAll('.subcategory-option')];
+      subcategoryOptionsArray.forEach(e => {
+        if (Number(e.getAttribute('data-category-id')) === Number(id)) {
+          e.style.display = "block";
+        } else {
+          e.style.display = "none";
+        }
+      });
+    }
   </script>
 </body>
 
