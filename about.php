@@ -75,7 +75,7 @@
               at quod iure dolores rem labore ipsa quaerat odio ipsam autem perferendis quis. Illo.</p>
             <button>Visit Profile</button>
           </div>
-          <img src="./images/prabesh.jpg" Team Member 1">
+          <img src="./images/rahul.png" Team Member 1">
         </div>
       </div>
       <div class="team-member rightMember">
