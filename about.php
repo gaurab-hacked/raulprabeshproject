@@ -278,36 +278,7 @@
 </head>
 
 <body>
-
-
-  <header class="header">
-    <div class="logo">
-      <a href="./index.php"><img src="./Logo/asd.png" alt="Logo: Sahaj-Subidha"></a>
-    </div>
-
-    <!-- menu -->
-    <nav class="nav-menu">
-      <ul>
-        <li><a href="./index.php">Home</a></li>
-        <li><a href="./about.php">About</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropbtn">Service</a>
-          <div class="dropdown-content">
-            <a href="./Services/homeservice.php">Home Service</a>
-            <a href="./Services/officeservice.php">Office Service</a>
-            <a href="./Services/emergencyservice.php">Emergency Service</a>
-          </div>
-        </li>
-        <li><a href="./index.php">Contact</a></li>
-        <li><a href="./auth/login.php">Login</a></li>
-      </ul>
-    </nav>
-
-  </header>
-  <!-- End Navbar -->
-
-  <!-- <img class="image1" src="./Pictures/pexels-antoni-shkraba-7163354.jpg" alt="image1"> -->
-
+  <?php include "./common/Navigation.php" ?>
 
   <div class="about-us-section">
     <center>
