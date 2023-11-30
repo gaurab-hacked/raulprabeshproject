@@ -6,7 +6,6 @@
 
 body {
   font-family: "Montserrat", sans-serif;
-  background-color: #f2f2f2;
 }
 
 /* Media queries */
@@ -108,41 +107,48 @@ body {
 }
 
 main {
-  padding: 100px 0px;
+  padding-top: 65px;
   text-align: center;
+  height: 75vh;
+  overflow: hidden;
+  position: relative;
 }
 
-.h1 {
-  background-image: url(./Pictures/pexels-fauxels-3184465.jpg);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  /* opacity: 0.5; */
-  width: 100%;
-  height: 90vh;
+.contentHero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-
+.content {
+  max-width: 500px;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+}
 main h2 {
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-  font-size: 80px;
-  padding: 5%;
-  text-align: center;
-  /* text-align: left; */
-  color: #ffffffed;
-  text-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5);
-  font-weight: 350;
-  background-color: #ffffff2e;
-  margin-top: 200px;
-  display: -webkit-inline-box;
-}
-
-main p {
+  color: white;
+  letter-spacing: 1px;
   font-size: 35px;
   text-shadow: 5px 5px 20px rgb(0, 0, 0);
-  padding: 50px;
+}
+main p {
+  font-size: 25px;
+  text-shadow: 5px 5px 20px rgb(0, 0, 0);
   text-align: center;
-  color: rgb(0, 0, 0);
+  color: white;
   font-weight: 300;
+  letter-spacing: 1px;
+}
+
+.swiper-container {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  text-align: center;
+  padding: 50px;
+  background-color: red;
 }
 
 li a {
@@ -183,7 +189,36 @@ section {
   margin-bottom: 0;
   padding-bottom: 0;
 }
-
+.slides {
+  position: relative;
+  background-color: black;
+}
+.contentHero {
+  z-index: 10;
+  position: absolute;
+  inset: 0;
+}
+.imageHero {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 0.4;
+  object-fit: contain !important;
+}
+#scrollImg {
+  z-index: 100000;
+  position: absolute;
+  bottom: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.scrollImgTag {
+  height: 50px;
+  width: 50px;
+  cursor: pointer;
+}
 .mid {
   background-color: #000000;
   color: #ffffff;
@@ -242,7 +277,7 @@ section {
 footer {
   background-color: #ffffff;
   color: #000000;
-  padding: 40px 0;
+  /* padding: 40px 0; */
 }
 
 .footer-content {
@@ -288,4 +323,16 @@ footer {
   background-color: #000000;
   color: #ffffff;
   padding: 20px 0;
+}
+
+.swiper-pagination-bullet {
+  color: white !important;
+  background-color: white !important;
+  height: 10px !important;
+  width: 10px !important;
+  transition: 0.2s !important;
+}
+.swiper-pagination-bullet-active {
+  width: 25px !important;
+  border-radius: 3px !important;
 }
