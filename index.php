@@ -181,33 +181,6 @@
 
   <!-- copyright -->
   <footer>
-    <!-- <div class="footer-content">
-      <div class="footer-column">
-        <h3>About Us</h3>
-        <br>
-        <p>Welcome to SAHAJ SUBIDHA, your trusted service provider for all your office needs. We are dedicated to
-          delivering exceptional solutions tailored to meet the unique requirements of your business.
-          We take pride in our customer-centric approach, working closely with our clients to understand their specific
-          needs and challenges. By offering customized solutions, we aim to build long-term partnerships that foster
-          growth and success for your business.
-        </p>
-      </div>
-      <div class="footer-column">
-        <h3>Links</h3>
-        <ul>
-          <li><a href="./index.php">Home</a></li>
-          <li><a href="about.php">About</a></li>
-          <li><a href="./index.php">Contact</a></li>
-        </ul>
-      </div>
-      <div class="footer-column">
-        <h3>Contact Us</h3>
-        <p>Email: info@SahajSubidha.com</p>
-        <p>Phone: 123-456-7890</p><br>
-        <a href="./index.php"><img src="./Logo/asd.png" alt="Logo: Sahaj-Subidha"></a>
-      </div>
-    </div> -->
-
     <div class="footer-bottom">
       <p>&copy; 2023 SAHAJ SUBIDHA. All rights reserved.</p>
     </div>

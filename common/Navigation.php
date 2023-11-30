@@ -27,7 +27,7 @@
                         <a href="./Services/emergencyservice.php">Emergency Service</a>
                     </div>
                 </li>
-                <li><a href="./index.php">Contact</a></li>
+                <li><a href="./contact.php">Contact</a></li>
                 <li><a href="./auth/login.php">Login</a></li>
             </ul>
         </nav>
