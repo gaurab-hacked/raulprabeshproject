@@ -131,7 +131,7 @@ WHERE
       <hr>
       <section class="cards">
         <div class="item">
-          <a href="./Services/homeservice.php">
+          <a href="./Services.php?service=Home+services">
             <img src="./images/Homeservice.jpg" alt="Image 1">
             <div class="contentCard">
               <h2>Home Services</h2>
@@ -146,7 +146,7 @@ WHERE
         </a>
 
         <div class="item">
-          <a href="./Services/officeservice.php">
+          <a href="./Services.php?service=Office+services">
             <img src="./images/officeService.jpg" alt="Image 2">
             <div class="contentCard">
               <h2>Office Services</h2>
@@ -161,7 +161,7 @@ WHERE
         </a>
 
         <div class="item">
-          <a href="./Services/emergencyservice.php">
+          <a href="./Services.php?service=Emergency+services">
             <img src="./images/EmergencyService.jpg" alt="Image 3">
             <div class="contentCard">
               <h2>Emergency Services</h2>
