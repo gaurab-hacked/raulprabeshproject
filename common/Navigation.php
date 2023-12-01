@@ -223,6 +223,12 @@ if (isset($_GET['logout'])) {
         .danger:hover {
             background-color: rgba(255, 0, 0, 0.7) !important;
         }
+
+        /* .IndexPageActive {
+            border-bottom: 3px solid black;
+            border-radius: 3px;
+            overflow: hidden;
+        } */
     </style>
 </head>
 
@@ -247,9 +253,8 @@ if (isset($_GET['logout'])) {
                         } else {
                             $hrefValue = $words[0];
                         }
-                        echo '<li class="dropdown">
-            <a href="' . $hrefValue . '.php" class="dropbtn" onmouseover="onHoverFunction(' . $row['id'] . ')">' . $row['category'] . '</a>
-            <div class="dropdown-content"></div></li>';
+                        echo '<li class="dropdown IndexPageActive">
+            <a href="' . $hrefValue . '.php" class="dropbtn" onmouseover="onHoverFunction(' . $row['id'] . ')">' . $row['category'] . '</a></li>';
                     }
                 }
                 ?>
