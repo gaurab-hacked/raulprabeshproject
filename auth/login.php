@@ -24,7 +24,7 @@ if (isset($_POST["submit"])) {
   <title>Login</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link href="./css/login.css" rel="stylesheet">
+  <link href="./css/logins.css" rel="stylesheet">
 </head>
 
 <body>
@@ -44,7 +44,10 @@ if (isset($_POST["submit"])) {
         </div>
         <button class="btn" type="submit" name="submit">Login</button>
       </form>
-      <p class="message">Not registered? <a href="register.php">Create an account</a></p>
+      <div class="msgme">
+        <p class="message">Not registered? <a href="register.php">Create an account</a></p>
+        <p class="message HomeGo">Dont want to login? <a href="../">Go Home</a></p>
+      </div>
     </div>
   </div>
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>

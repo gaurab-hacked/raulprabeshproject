@@ -37,7 +37,7 @@ if (isset($_POST["submit"])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
-    <link href="./css/register.css" rel="stylesheet">
+    <link href="./css/registersss.css" rel="stylesheet">
 </head>
 
 <body>
@@ -64,6 +64,10 @@ if (isset($_POST["submit"])) {
                 <!-- For button -->
                 <button type="submit" name="submit">Register</button>
             </form>
+            <div class="msgme">
+                <p class="message">Already Have Account? <a href="login.php">Login</a></p>
+                <p class="message HomeGo">Dont want to login? <a href="../">Go Home</a></p>
+            </div>
         </div>
     </div>
     <!-- <script src="script.js"></script> -->

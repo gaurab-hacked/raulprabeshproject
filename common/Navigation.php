@@ -28,6 +28,40 @@ $result = $conn->query($sql);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="./css/navigations.css">
+    <style>
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        #login {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 30px;
+        }
+
+        #login a {
+            border: 1px solid blue;
+            padding: 6px 12px;
+            border-radius: 3px;
+            letter-spacing: 1px;
+            background-color: rgba(0, 0, 255, 0.2);
+            transition: .2s;
+            font-size: 14px;
+        }
+
+        #login a:hover {
+            background-color: rgba(0, 0, 255, 0.4);
+            color: black;
+        }
+
+        #login a:hover::after {
+            transform-origin: right;
+            transform: scaleX(0);
+        }
+    </style>
 </head>
 
 <body>
@@ -57,9 +91,9 @@ $result = $conn->query($sql);
                     }
                 }
                 ?>
-
-
-
+                <div id="login">
+                    <a href="./auth/login.php">Login</a>
+                </div>
             </ul>
         </nav>
     </header>
