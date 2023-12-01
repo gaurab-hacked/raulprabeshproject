@@ -82,8 +82,8 @@ table {
   z-index: 10;
 }
 #modalContentLayer {
-  height: 390px;
-  width: 480px;
+  height: 440px;
+  width: 530px;
   z-index: 11;
 }
 #Modal {

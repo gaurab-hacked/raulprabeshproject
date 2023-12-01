@@ -15,6 +15,8 @@ $subcategoryId = "";
 $productId = "";
 $title = "";
 $description = "";
+$phnumber = "";
+$address = "";
 
 
 // !======================= UPDATE Operation =======================
@@ -130,7 +132,7 @@ $resultsubcategory = $conn->query($sqlsubcategory);
 // Your SQL query
 $sqlProduct = "SELECT c.category AS category, c.id AS categoryId, s.subcategory AS subcategory, s.id AS subcategoryId,
                       p.id AS productId, p.name AS productName, p.description AS productDescription, 
-                      p.isOrdered, p.image, p.date, p.userId, p.id AS id
+                       p.image, p.date, p.userId, p.id AS id, p.phnumber AS phnumber, p.address AS address
                       FROM
     producttable AS p
 LEFT JOIN
@@ -149,6 +151,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["createProduct"])) {
   $subcategoryId = $_POST["subcategory"];
   $productName = $_POST["productName"];
   $productDescription = $_POST["productDescription"];
+  $phnumber = $_POST["phnumber"];
+  $address = $_POST["address"];
   $userId = 1; // Replace with the actual user ID or implement user authentication
 
   // File upload handling
@@ -180,7 +184,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["createProduct"])) {
     } else {
       if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile)) {
         $imagePath = $targetFile;
-        $sqlCreateProduct = "INSERT INTO producttable (categoryId, subcategoryId, name, description, image, userId) VALUES ('$categoryId', '$subcategoryId', '$productName', '$productDescription', '$imagePath', '$userId')";
+        $sqlCreateProduct = "INSERT INTO producttable (categoryId, subcategoryId, name, description, image, userId, phnumber, address) VALUES ('$categoryId', '$subcategoryId', '$productName', '$productDescription', '$imagePath', '$userId', '$phnumber', '$address')";
 
         if ($conn->query($sqlCreateProduct) === TRUE) {
           // echo "Product created successfully";
@@ -212,7 +216,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["createProduct"])) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sajha Subidha</title>
   <link rel="stylesheet" href="./styles/style.css" />
-  <link rel="stylesheet" href="./styles/products.css" />
+  <link rel="stylesheet" href="./styles/product.css" />
 </head>
 
 <body>
@@ -225,8 +229,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["createProduct"])) {
         <li><a href="./category.php">Category</a></li>
         <li><a href="./subcategory.php">Subcategory</a></li>
         <li><a href="./products.php" class="active">Products</a></li>
-        <li><a href="./orders.php">Orders</a></li>
-        <li><a href="./delivery.php">Delivery</a></li>
+
         <li><a href="./contact.php">Messages</a></li>
         <li><a href="./users.php">Users</a></li>
       </ul>
@@ -257,6 +260,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["createProduct"])) {
               <th>Image</th>
               <th>Category</th>
               <th>Subcategory</th>
+              <th>Phone Number</th>
+              <th>Address</th>
               <th colspan="2">Action</th>
             </tr>
           </thead>
@@ -275,6 +280,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["createProduct"])) {
                      alt="' . $row['productName'] . '"></td>
             <td>' . $row['category'] . '</td>
             <td>' . ($row['subcategory'] !== null ? $row['subcategory'] : '-') . '</td>
+            <td>' . ($row['phnumber'] !== null ? $row['phnumber'] : '-') . '</td>
+            <td>' . ($row['address'] !== null ? $row['address'] : '-') . '</td>
             <td><a href="?edit=' . $row['id'] . '" onclick="ModalOpen()">' . file_get_contents("./svg/edit.svg") . '</a></td>
             <td><a href="?delete=' . $row['id'] . '">' . file_get_contents("./svg/delete.svg") . '</a></td>
         </tr>';
@@ -330,6 +337,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["createProduct"])) {
                 <input type="text" name="productName" id="product" placeholder="Product Title"
                   value="<?php echo htmlspecialchars($title); ?>" />
                 <input type="file" name="image" id="image" accept=".jpg, .jpeg, .png" placeholder="Product Image" />
+              </div>
+              <div class="flex">
+                <input type="number" name="phnumber" id="productphnumber" placeholder="Product phone number" />
+                <input type="text" name="address" id="address" placeholder="Product address" />
               </div>
               <textarea name="productDescription" id="description" cols="30"
                 rows="8"><?php echo htmlspecialchars($description); ?></textarea>

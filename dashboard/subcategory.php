@@ -109,8 +109,7 @@ $conn->close();
         <li><a href="./category.php">Category</a></li>
         <li><a href="./subcategory.php" class="active">Subcategory</a></li>
         <li><a href="./products.php">Products</a></li>
-        <li><a href="./orders.php">Orders</a></li>
-        <li><a href="./delivery.php">Delivery</a></li>
+
         <li><a href="./contact.php">Messages</a></li>
         <li><a href="./users.php">Users</a></li>
       </ul>
