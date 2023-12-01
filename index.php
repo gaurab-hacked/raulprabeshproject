@@ -1,3 +1,74 @@
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "prabeshraul";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
+
+
+// ?======== for product ============
+// Your SQL query
+$sqlProduct = "SELECT c.category AS category, c.id AS categoryId, s.subcategory AS subcategory, s.id AS subcategoryId,
+                      p.id AS productId, p.name AS productName, p.description AS productDescription, 
+                      p.isOrdered, p.image, p.date, p.userId, p.id AS id
+                      FROM
+    producttable AS p
+LEFT JOIN
+    category AS c ON c.id = p.categoryId
+LEFT JOIN
+    subcategory AS s ON s.id = p.subcategoryId
+    ";
+
+// Perform the query
+$resultProduct = $conn->query($sqlProduct);
+
+
+// !============================ for search query ========================
+if (isset($_GET['search'])) {
+  $searchContent = $_GET['search'];
+
+  // Your SQL query
+  $sqlProduct = "SELECT c.category AS category, c.id AS categoryId, s.subcategory AS subcategory, s.id AS subcategoryId,
+                      p.id AS productId, p.name AS productName, p.description AS productDescription, 
+                      p.isOrdered, p.image, p.date, p.userId, p.id AS id
+                      FROM
+    producttable AS p
+LEFT JOIN
+    category AS c ON c.id = p.categoryId
+LEFT JOIN
+    subcategory AS s ON s.id = p.subcategoryId
+WHERE
+    p.name LIKE '%$searchContent%' 
+    ";
+
+  // Perform the query
+  $resultProduct = $conn->query($sqlProduct);
+
+  // JavaScript code for scrolling down
+  echo '<script>
+          function scrollDownClk() {
+            window.scrollTo({
+              top: window.scrollY + 2000,
+              behavior: "smooth"
+            });
+          }
+
+          // Call the scrollDownClk function when the page loads
+          window.onload = function() {
+            scrollDownClk();
+          };
+        </script>';
+}
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -119,7 +190,23 @@
       </div>
       <hr>
       <div class="allservices">
-        <div class="card">
+        <?php
+        if ($resultProduct->num_rows > 0) {
+          $serialNumber = 1;
+          while ($row = $resultProduct->fetch_assoc()) {
+            echo '
+            <div class="card" style="max-width: 350px;">
+              <img  src="http://localhost/SahajSubidha/dashboard/' . $row['image'] . '">
+              <div class="card-content">
+                <h2>' . $row['productName'] . '</h2>
+                <p>' . $row['productDescription'] . '</p>
+                  <a href="?product-order=' . $row['id'] . '" class="order-btn">Order Now</a>
+                </div>
+              </div>
+              ';
+          }
+        } ?>
+        <!-- <div class="card">
           <img src="./images/EmergencyService.jpg" alt="Product Image">
           <div class="card-content">
             <h2>Product Name</h2>
@@ -163,16 +250,7 @@
               dolore magna aliqua.</p>
             <a href="#" class="order-btn">Order Now</a>
           </div>
-        </div>
-        <div class="card">
-          <img src="./images/EmergencyService.jpg" alt="Product Image">
-          <div class="card-content">
-            <h2>Product Name</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
-              dolore magna aliqua.</p>
-            <a href="#" class="order-btn">Order Now</a>
-          </div>
-        </div>
+        </div> -->
       </div>
     </div>
 
@@ -185,7 +263,6 @@
       <p>&copy; 2023 SAHAJ SUBIDHA. All rights reserved.</p>
     </div>
   </footer>
-  <!-- Swiper JS -->
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
   <!-- Initialize Swiper -->
