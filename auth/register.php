@@ -10,13 +10,27 @@ if (isset($_POST["submit"])) {
 
     // Check if email or phone number already exists
     $duplicate = mysqli_query($conn, "SELECT * FROM `user` WHERE email='$email' OR phNumber='$phone_no'");
+
     if (mysqli_num_rows($duplicate) > 0) {
         echo "<script>alert('Email or phone number is already taken');</script>";
     } else {
         // Check if password matches the confirm password
         if ($password == $confirm_password) {
             $query = "INSERT INTO user (name, email, phNumber, password) VALUES ('$name', '$email', '$phone_no', '$password')";
+
             if (mysqli_query($conn, $query)) {
+                // Fetch the user details after registration
+                $user_id = mysqli_insert_id($conn);
+                $user_query = mysqli_query($conn, "SELECT * FROM `user` WHERE id='$user_id'");
+                $user = mysqli_fetch_assoc($user_query);
+
+                // Start the session and store user information
+                session_start();
+                $_SESSION['id'] = $user['id'];
+                $_SESSION['name'] = $user['name'];
+                $_SESSION['email'] = $user['email'];
+                $_SESSION['phNumber'] = $user['phNumber'];
+
                 echo "<script>alert('Registration has been successful 😊');</script>";
                 header("Location: ../");
             } else {
@@ -28,6 +42,7 @@ if (isset($_POST["submit"])) {
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -65,7 +80,7 @@ if (isset($_POST["submit"])) {
                 <button type="submit" name="submit">Register</button>
             </form>
             <div class="msgme">
-                <p class="message">Already Have Account? <a href="login.php">Login</a></p>
+                <p class="message">Already Have Account? <a href="login.php">Login account</a></p>
                 <p class="message HomeGo">Dont want to login? <a href="../">Go Home</a></p>
             </div>
         </div>

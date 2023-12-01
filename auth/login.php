@@ -1,6 +1,11 @@
 <?php
 require 'config.php';
 
+// Check if the session is not already started
+if (session_status() == PHP_SESSION_NONE) {
+  session_start(); // Start the session
+}
+
 if (isset($_POST["submit"])) {
   $email = $_POST["email"];
   $password = $_POST["password"];
@@ -9,8 +14,20 @@ if (isset($_POST["submit"])) {
   $result = mysqli_query($conn, $query);
 
   if (mysqli_num_rows($result) > 0) {
+    // Fetch the user details
+    $user = mysqli_fetch_assoc($result);
+
+    // Store user information in session variables
+    $_SESSION['id'] = $user['id'];
+    $_SESSION['name'] = $user['name'];
+    $_SESSION['email'] = $user['email'];
+    $_SESSION['password'] = $user['password'];
+    $_SESSION['privilege'] = $user['privilege'];
+    $_SESSION['phNumber'] = $user['phNumber'];
+
     echo "<script>alert('Login successful');</script>";
     header("Location: ../");
+    exit(); // Ensure no further code execution after redirection
   } else {
     echo "<script>alert('Invalid email or password');</script>";
   }
