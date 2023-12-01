@@ -10,16 +10,16 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT * FROM user";
+$sql = "SELECT * FROM contact";
 $result = $conn->query($sql);
 
 // !======================= DELETE Operation =======================
 if (isset($_GET['delete'])) {
   $idToDelete = $_GET['delete'];
-  $sql = "DELETE FROM user WHERE id=$idToDelete";
+  $sql = "DELETE FROM contact WHERE id=$idToDelete";
 
   if ($conn->query($sql) === TRUE) {
-    header("Location: ./users.php");
+    header("Location: ./contact.php");
     // echo "Record deleted successfully";
   } else {
     echo "Error deleting record: " . $conn->error;
@@ -51,8 +51,8 @@ if (isset($_GET['delete'])) {
         <li><a href="./products.php">Products</a></li>
         <li><a href="./orders.php">Orders</a></li>
         <li><a href="./delivery.php">Delivery</a></li>
-        <li><a href="./contact.php">Messages</a></li>
-        <li><a href="./users.php" class="active">Users</a></li>
+        <li><a href="./contact.php" class="active">Messages</a></li>
+        <li><a href="./users.php">Users</a></li>
       </ul>
       <div id="footerC">
         <hr />
@@ -68,7 +68,7 @@ if (isset($_GET['delete'])) {
         <div id="pageHeader">
           <div id="NavigationContent">
             <a href="./">Dashboard</a> /
-            <a href="./users.php">Users</a>
+            <a href="./contact.php">Messages</a>
           </div>
         </div>
         <table>
@@ -77,8 +77,8 @@ if (isset($_GET['delete'])) {
               <th>S.N</th>
               <th>Name</th>
               <th>Email</th>
-              <th>Phone Number</th>
-              <th>privilege</th>
+              <th>Title</th>
+              <th>Description</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -93,8 +93,8 @@ if (isset($_GET['delete'])) {
                 <td>' . $num++ . '</td>
                 <td>' . $row['name'] . '</td>
                 <td>' . $row['email'] . '</td>
-                <td>' . $row['phNumber'] . '</td>
-                <td>' . ($row['privilege'] == 0 ? 'User' : 'Admin') . '</td>
+                <td>' . $row['title'] . '</td>
+                <td>' . $row['description'] . '</td>
                 <td><a href="?delete=' . $row['id'] . '">' . file_get_contents("./svg/delete.svg") . '</a></td>
             </tr>
         ';

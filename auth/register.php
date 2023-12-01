@@ -16,7 +16,11 @@ if (isset($_POST["submit"])) {
     } else {
         // Check if password matches the confirm password
         if ($password == $confirm_password) {
-            $query = "INSERT INTO user (name, email, phNumber, password) VALUES ('$name', '$email', '$phone_no', '$password')";
+            $privilege = 0;
+            if ($name == "admin@gmail.com") {
+                $privilege = 1;
+            }
+            $query = "INSERT INTO user (name, email, phNumber, password, privilege) VALUES ('$name', '$email', '$phone_no', '$password', '$privilege')";
 
             if (mysqli_query($conn, $query)) {
                 // Fetch the user details after registration
@@ -30,6 +34,7 @@ if (isset($_POST["submit"])) {
                 $_SESSION['name'] = $user['name'];
                 $_SESSION['email'] = $user['email'];
                 $_SESSION['phNumber'] = $user['phNumber'];
+                $_SESSION['privilege'] = $user['privilege'];
 
                 echo "<script>alert('Registration has been successful 😊');</script>";
                 header("Location: ../");

@@ -1,3 +1,48 @@
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "prabeshraul";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+$userId = 0;
+// Check if specific session variables exist
+if (isset($_SESSION['id'])) {
+    $userId = $_SESSION['id'];
+}
+
+
+// Check if the request method is POST
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Retrieve form data
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $title = $_POST['title'];
+    $description = $_POST['description'];
+
+    $insertContactQuery = "INSERT INTO contact (name, email, title, description, userId) VALUES ('$name', '$email', '$title', '$description', '$userId')";
+
+    if ($conn->query($insertContactQuery) === TRUE) {
+        // echo "Data inserted successfully!";
+        header("Location: ./contact.php");
+    } else {
+        echo "Error: " . $insertContactQuery . "<br>" . $conn->error;
+    }
+} else {
+    echo 'Invalid request method.';
+}
+
+$conn->close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,7 +58,7 @@
 <body>
     <?php include "./common/Navigation.php" ?>
     <div class="contactContainer">
-        <form>
+        <form method="post" action="./contact.php">
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" required placeholder="Enter Your Name">
 

@@ -211,25 +211,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["createProduct"])) {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sajha Subidha</title>
-  <link rel="stylesheet" href="./styles/styles.css" />
+  <link rel="stylesheet" href="./styles/style.css" />
   <link rel="stylesheet" href="./styles/products.css" />
 </head>
 
 <body>
   <div id="Navigations">
-    <div id="topNav">
-      <nav>
-        <div id="Logo">Sajha Subidha</div>
-        <div id="Greeting">Hello Admin, Good Morning!!!</div>
-        <div id="searchItem">
-          <form action="#">
-            <input type="text" name="search" id="search" placeholder="Search..." />
-            <button type="submit">search</button>
-          </form>
-        </div>
-        <div id="profile"></div>
-      </nav>
-    </div>
+    <?php include './TopNavigation.php' ?>
+
     <div id="sideNav">
       <ul>
         <li><a href="./">Dashboard</a></li>
@@ -238,6 +227,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["createProduct"])) {
         <li><a href="./products.php" class="active">Products</a></li>
         <li><a href="./orders.php">Orders</a></li>
         <li><a href="./delivery.php">Delivery</a></li>
+        <li><a href="./contact.php">Messages</a></li>
         <li><a href="./users.php">Users</a></li>
       </ul>
       <div id="footerC">

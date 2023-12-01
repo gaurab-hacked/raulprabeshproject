@@ -43,14 +43,6 @@
   letter-spacing: 0.05rem;
   font-family: Arial, Helvetica, sans-serif;
 }
-#profile {
-  height: 35px;
-  width: 35px;
-  border-radius: 100%;
-  background-color: red;
-  position: absolute;
-  right: 20px;
-}
 #searchItem {
   width: 500px;
 }

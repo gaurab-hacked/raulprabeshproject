@@ -1,14 +1,4 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "prabeshraul";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 $userId = 0;
 $userName = "User";
 $userEmail = "user@gmail.com";
@@ -28,26 +18,7 @@ if (isset($_SESSION['id'], $_SESSION['name'], $_SESSION['email'], $_SESSION['phN
     $userPhoneNumber = $_SESSION['phNumber'];
 }
 
-
-
-// !======================= READ Operation =======================
-$sql = "SELECT id, category, date FROM category";
-$result = $conn->query($sql);
-
-// $sqlSubcategory = "SELECT * FROM subcategory";
-// $resultSubcategory = $conn->query($sqlSubcategory);
-
-
-if (isset($_GET['logout'])) {
-    session_destroy();
-    header("Location: " . $_SERVER['PHP_SELF']);
-    exit(); // Ensure no further code execution after redirection
-}
-
-
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -55,7 +26,6 @@ if (isset($_GET['logout'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <!-- <link rel="stylesheet" href="./css/navigations.css"> -->
     <style>
         .nav-menu {
             display: flex;
@@ -106,6 +76,9 @@ if (isset($_GET['logout'])) {
             margin-left: 40px;
             cursor: pointer;
             margin-top: 4px;
+            position: absolute;
+            top: 8px;
+            right: 25px;
         }
 
         #outerlayer {
@@ -227,73 +200,45 @@ if (isset($_GET['logout'])) {
 </head>
 
 <body>
-    <!-- For Logo and nav menu -->
-    <header class="header" style="z-index:1000000;">
-        <div class="logo">
-            <a href="./index.php"><img src="./common/logo.png" alt="Logo: Sahaj-Subidha"></a>
-        </div>
-        <!-- menu -->
-        <nav class="nav-menu">
-            <ul>
-                <?php
-                if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
-                        $categoryLink = strtolower($row['category']) == "home" ? './index' : './' . $row['category'];
-                        $words = explode(' ', $categoryLink);
-                        if ($categoryLink == './about us') {
-                            $hrefValue = 'about';
-                        } elseif ($categoryLink == './contact us') {
-                            $hrefValue = 'contact';
-                        } else {
-                            $hrefValue = $words[0];
-                        }
-                        echo '<li class="dropdown">
-            <a href="' . $hrefValue . '.php" class="dropbtn" onmouseover="onHoverFunction(' . $row['id'] . ')">' . $row['category'] . '</a>
-            <div class="dropdown-content"></div></li>';
-                    }
-                }
-                ?>
-                <?php
-                echo $userId < 1 ? '
-                    <div id="login">
-                        <a href="./auth/login.php">Login</a>
-                    </div>
-                ' : '
-                    <div id="profile">
-                        <div id="OuterProfile" onclick="profileClick()">' . strtoupper(substr($userName, 0, 1)) . '</div>
-                        <div id="outerlayer">
-                            <div id="userProfile">
-                                <div class="topdata">
-                                    <div class="imageProfile">' . strtoupper(substr($userName, 0, 1)) . '</div>
-                                    <div class="userData">
-                                        <div id="userName">' . $userName . '</div>
-                                        <div id="userEmail">' . $userEmail . '</div>
-                                    </div>
+    <div id="topNav">
+        <nav>
+            <div id="Logo">Sajha Subidha</div>
+            <div id="Greeting">Hello Admin, Good Morning!!!</div>
+            <div id="searchItem">
+                <form action="#">
+                    <input type="text" name="search" id="search" placeholder="Search..." />
+                    <button type="submit">search</button>
+                </form>
+            </div>
+            <?php
+            echo '
+            <div id="profile">
+            <div id="OuterProfile" onclick="profileClick()">' . strtoupper(substr($userName, 0, 1)) . '</div>
+            <div id="outerlayer">
+                    <div id="userProfile">
+                    <div class="topdata">
+                            <div class="imageProfile">' . strtoupper(substr($userName, 0, 1)) . '</div>
+                            <div class="userData">
+                                <div id="userName">' . $userName . '</div>
+                                <div id="userEmail">' . $userEmail . '</div>
+                                </div>
                                 </div>
                                 <p>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, laboriosam?
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, laboriosam?
                                 </p>
                                 <div id="buttons">
-                                    <div><a href="#">Your Orders</a></div>
-                                    <div><a href="?logout=' . $userId . '" class="danger">Logout</a></div>
+                                <div><a href="#">Your Orders</a></div>
+                                <div><a href="?logout=' . $userId . '" class="danger">Logout</a></div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                ';
-                ?>
-
-            </ul>
+                                </div>
+                                </div>
+                                </div>
+                                ';
+            ?>
         </nav>
-    </header>
-    <!-- For body part -->
+    </div>
     <script>
-        // const onHoverFunction = (id) => {
-        //     console.log(id);
-        // };
-
         const outerlayer = document.getElementById("outerlayer");
-
         function profileClick() {
             if (outerlayer.style.display === "" || outerlayer.style.display === "none") {
                 outerlayer.style.display = "block";
@@ -301,7 +246,6 @@ if (isset($_GET['logout'])) {
                 outerlayer.style.display = "none";
             }
         }
-
         outerlayer.addEventListener('click', () => {
             outerlayer.style.display = "none";
         });
@@ -316,18 +260,3 @@ if (isset($_GET['logout'])) {
 </body>
 
 </html>
-
-
-
-
-<!-- <li><a href="./about.php">About</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropbtn">Service</a>
-                    <div class="dropdown-content">
-                        <a href="./Services/homeservice.php">Home Service</a>
-                        <a href="./Services/officeservice.php">Office Service</a>
-                        <a href="./Services/emergencyservice.php">Emergency Service</a>
-                    </div>
-                </li>
-                <li><a href="./contact.php">Contact</a></li>
-                <li><a href="./auth/login.php">Login</a></li> -->

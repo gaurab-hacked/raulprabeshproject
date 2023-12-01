@@ -117,8 +117,8 @@ $resultSubcategory = $conn->query($sqlSubcategory);
 
 
   <?php include "./common/Navigation.php" ?>
-  <div style="margin-top: 50px;"></div>
   <div class="other-services">
+    <div style="padding-top: 80px;"></div>
     <div class="contentServiceAll">
       <hr>
       <div class="mid">
