@@ -14,6 +14,9 @@ if ($conn->connect_error) {
 $sql = "SELECT id, category, date FROM category";
 $result = $conn->query($sql);
 
+// $sqlSubcategory = "SELECT * FROM subcategory";
+// $resultSubcategory = $conn->query($sqlSubcategory);
+
 ?>
 
 
@@ -37,17 +40,35 @@ $result = $conn->query($sql);
         <nav class="nav-menu">
             <ul>
                 <?php
-
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
-                        echo '<li><a href="./index.php">' . $row['category'] . '</a></li>';
+                        $categoryLink = strtolower($row['category']) == "home" ? './index' : './' . $row['category'];
+                        $words = explode(' ', $categoryLink);
+                        if ($categoryLink == './about us') {
+                            $hrefValue = 'about';
+                        } elseif ($categoryLink == './contact us') {
+                            $hrefValue = 'contact';
+                        } else {
+                            $hrefValue = $words[0];
+                        }
+                        echo '<li class="dropdown">
+            <a href="' . $hrefValue . '.php" class="dropbtn" onmouseover="onHoverFunction(' . $row['id'] . ')">' . $row['category'] . '</a>
+            <div class="dropdown-content"></div></li>';
                     }
                 }
                 ?>
+
+
+
             </ul>
         </nav>
     </header>
     <!-- For body part -->
+    <script>
+        const onHoverFunction = (id) => {
+            console.log(id)
+        }
+    </script>
 </body>
 
 </html>

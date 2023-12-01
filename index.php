@@ -21,7 +21,7 @@ $sqlProduct = "SELECT c.category AS category, c.id AS categoryId, s.subcategory 
 LEFT JOIN
     category AS c ON c.id = p.categoryId
 LEFT JOIN
-    subcategory AS s ON s.id = p.subcategoryId
+    subcategory AS s ON s.id = p.subcategoryId LIMIT 10
     ";
 
 // Perform the query
@@ -43,7 +43,7 @@ LEFT JOIN
 LEFT JOIN
     subcategory AS s ON s.id = p.subcategoryId
 WHERE
-    p.name LIKE '%$searchContent%' 
+    p.name LIKE '%$searchContent%' LIMIT 10
     ";
 
   // Perform the query
@@ -51,7 +51,7 @@ WHERE
 
   // JavaScript code for scrolling down
   echo '<script>
-          function scrollDownClk() {
+          function scrollDownClkD() {
             window.scrollTo({
               top: window.scrollY + 2000,
               behavior: "smooth"
@@ -60,7 +60,7 @@ WHERE
 
           // Call the scrollDownClk function when the page loads
           window.onload = function() {
-            scrollDownClk();
+            scrollDownClkD();
           };
         </script>';
 }
@@ -78,7 +78,7 @@ WHERE
   <title>Sahaj-Subidha</title>
   <link rel="stylesheet" href="style111.css">
   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-  <link rel="stylesheet" href="./Service.css">
+  <link rel="stylesheet" href="./Services.css">
 </head>
 
 <body>
@@ -182,7 +182,7 @@ WHERE
     <div class="contentServiceAll">
       <hr>
       <div class="mid">
-        <h2>Ultimate Services</h2>
+        <h2>Other Services</h2>
         <form>
           <input type="text" name="search" id="search" placeholder="Search Services...">
           <button type="submit">Search</button>
@@ -195,62 +195,19 @@ WHERE
           $serialNumber = 1;
           while ($row = $resultProduct->fetch_assoc()) {
             echo '
-            <div class="card" style="max-width: 350px;">
+            <div class="card" style="max-width: 350px; height: 350px; overflow:hidden;">
               <img  src="http://localhost/SahajSubidha/dashboard/' . $row['image'] . '">
               <div class="card-content">
-                <h2>' . $row['productName'] . '</h2>
+              <div style="height: 115px; overflow: hidden;">
+              <h2 style="font-size: 19px;">' . $row['productName'] . '</h2>
                 <p>' . $row['productDescription'] . '</p>
-                  <a href="?product-order=' . $row['id'] . '" class="order-btn">Order Now</a>
+              </div>
+              <a href="?product-order=' . $row['id'] . '" class="order-btn">Order Now</a>
                 </div>
               </div>
               ';
           }
         } ?>
-        <!-- <div class="card">
-          <img src="./images/EmergencyService.jpg" alt="Product Image">
-          <div class="card-content">
-            <h2>Product Name</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
-              dolore magna aliqua.</p>
-            <a href="#" class="order-btn">Order Now</a>
-          </div>
-        </div>
-        <div class="card">
-          <img src="./images/EmergencyService.jpg" alt="Product Image">
-          <div class="card-content">
-            <h2>Product Name</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
-              dolore magna aliqua.</p>
-            <a href="#" class="order-btn">Order Now</a>
-          </div>
-        </div>
-        <div class="card">
-          <img src="./images/EmergencyService.jpg" alt="Product Image">
-          <div class="card-content">
-            <h2>Product Name</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
-              dolore magna aliqua.</p>
-            <a href="#" class="order-btn">Order Now</a>
-          </div>
-        </div>
-        <div class="card">
-          <img src="./images/EmergencyService.jpg" alt="Product Image">
-          <div class="card-content">
-            <h2>Product Name</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
-              dolore magna aliqua.</p>
-            <a href="#" class="order-btn">Order Now</a>
-          </div>
-        </div>
-        <div class="card">
-          <img src="./images/EmergencyService.jpg" alt="Product Image">
-          <div class="card-content">
-            <h2>Product Name</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
-              dolore magna aliqua.</p>
-            <a href="#" class="order-btn">Order Now</a>
-          </div>
-        </div> -->
       </div>
     </div>
 
@@ -290,6 +247,7 @@ WHERE
         behavior: 'smooth'
       });
     }
+
   </script>
 
 

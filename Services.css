@@ -171,3 +171,7 @@ button:hover {
   justify-content: space-between;
   align-items: center;
 }
+.flex {
+  display: flex;
+  gap: 50px;
+}
