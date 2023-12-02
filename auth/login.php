@@ -45,6 +45,15 @@ if (isset($_POST["submit"])) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link href="./css/logins.css" rel="stylesheet">
+  <style>
+    .error-message {
+      color: red;
+      margin-top: 5px;
+      font-size: 14px;
+      width: 100%;
+      text-align: start;
+    }
+  </style>
 </head>
 
 <body>
@@ -55,12 +64,12 @@ if (isset($_POST["submit"])) {
         <div class="input-container">
           <span class="icon"><ion-icon name="mail"></ion-icon></span>
           <label for="email"></label>
-          <input type="email" name="email" class="input-field" placeholder="Email" required />
+          <input type="email" name="email" class="input-field" placeholder="Email" />
         </div>
         <div class="input-container">
           <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
           <label for="password"></label>
-          <input type="password" name="password" class="input-field" placeholder="Password" required />
+          <input type="password" name="password" class="input-field" placeholder="Password" />
         </div>
         <button class="btn" type="submit" name="submit">Login</button>
       </form>
@@ -72,6 +81,54 @@ if (isset($_POST["submit"])) {
   </div>
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Get form and input elements
+      var loginForm = document.querySelector('.login-form');
+      var emailInput = document.querySelector('input[name="email"]');
+      var passwordInput = document.querySelector('input[name="password"]');
+
+      // Add event listener to form on submit
+      loginForm.addEventListener('submit', function (event) {
+        // Remove existing error messages
+        clearErrorMessages();
+
+        // Check if email is empty or not in a valid format
+        if (emailInput.value.trim() === '' || !isValidEmail(emailInput.value)) {
+          event.preventDefault();
+          displayErrorMessage(emailInput, 'Please enter a valid email.');
+        }
+
+        // Check if password is empty or less than 4 characters
+        if (passwordInput.value.trim() === '' || passwordInput.value.length < 4) {
+          event.preventDefault();
+          displayErrorMessage(passwordInput, 'Password must be at least 4 characters.');
+        }
+      });
+
+      // Function to display error messages
+      function displayErrorMessage(inputField, message) {
+        var errorMessage = document.createElement('p');
+        errorMessage.className = 'error-message';
+        errorMessage.textContent = message;
+        inputField.parentNode.appendChild(errorMessage);
+      }
+
+      // Function to clear error messages
+      function clearErrorMessages() {
+        var errorMessages = document.querySelectorAll('.error-message');
+        errorMessages.forEach(function (errorMessage) {
+          errorMessage.parentNode.removeChild(errorMessage);
+        });
+      }
+
+      // Function to validate email format using a regular expression
+      function isValidEmail(email) {
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+      }
+    });
+  </script>
 </body>
 
 </html>
