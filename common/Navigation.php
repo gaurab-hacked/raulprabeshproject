@@ -244,7 +244,7 @@ if (isset($_GET['logout'])) {
                 <?php
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
-                        $categoryLink = strtolower($row['category']) == "home" ? './index' : './' . $row['category'];
+                        $categoryLink = strtolower($row['category']) == "home" ? './index' : './' . strtolower($row['category']);
                         $words = explode(' ', $categoryLink);
                         if ($categoryLink == './about us') {
                             $hrefValue = 'about';
@@ -253,11 +253,19 @@ if (isset($_GET['logout'])) {
                         } else {
                             $hrefValue = $words[0];
                         }
-                        echo '<li class="dropdown IndexPageActive">
-            <a href="' . $hrefValue . '.php" class="dropbtn" onmouseover="onHoverFunction(' . $row['id'] . ')">' . $row['category'] . '</a></li>';
+                        if ($userId < 1 && strtolower($row['category']) != "add product") {
+                            // Print only if the condition is met
+                            echo '<li class="dropdown IndexPageActive">
+                <a href="' . $hrefValue . '.php" class="dropbtn" onmouseover="onHoverFunction(' . $row['id'] . ')">' . $row['category'] . '</a></li>';
+                        } elseif ($userId >= 1) {
+                            // Print all if user ID is greater than or equal to 1
+                            echo '<li class="dropdown IndexPageActive">
+                <a href="' . $hrefValue . '.php" class="dropbtn" onmouseover="onHoverFunction(' . $row['id'] . ')">' . $row['category'] . '</a></li>';
+                        }
                     }
                 }
                 ?>
+
                 <?php
                 echo $userId < 1 ? '
                     <div id="login">

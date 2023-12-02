@@ -17,7 +17,7 @@ if (isset($_POST["submit"])) {
         // Check if password matches the confirm password
         if ($password == $confirm_password) {
             $privilege = 0;
-            if ($name == "admin@gmail.com") {
+            if ($email == "admin@gmail.com") {
                 $privilege = 1;
             }
             $query = "INSERT INTO user (name, email, phNumber, password, privilege) VALUES ('$name', '$email', '$phone_no', '$password', '$privilege')";

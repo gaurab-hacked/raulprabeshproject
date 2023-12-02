@@ -17,6 +17,17 @@ if (isset($_SESSION['id'], $_SESSION['name'], $_SESSION['email'], $_SESSION['phN
     $userPrivilege = $_SESSION['privilege'];
     $userPhoneNumber = $_SESSION['phNumber'];
 }
+if ($userPrivilege == 0) {
+    header("Location: ../");
+}
+
+
+if (isset($_GET['logout'])) {
+    session_destroy();
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit(); // Ensure no further code execution after redirection
+}
+
 
 ?>
 <!DOCTYPE html>

@@ -25,8 +25,11 @@ if (isset($_POST["submit"])) {
     $_SESSION['privilege'] = $user['privilege'];
     $_SESSION['phNumber'] = $user['phNumber'];
 
-    echo "<script>alert('Login successful');</script>";
-    header("Location: ../");
+    if ($user['privilege'] == 1) {
+      header("Location: ../dashboard");
+    } else {
+      header("Location: ../");
+    }
     exit(); // Ensure no further code execution after redirection
   } else {
     echo "<script>alert('Invalid email or password');</script>";
