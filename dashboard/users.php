@@ -26,6 +26,15 @@ if (isset($_GET['delete'])) {
   }
 }
 
+
+if (isset($_GET['search'])) {
+  $search = $_GET['search'];
+  $sql = "SELECT * FROM user WHERE name LIKE '%$search%'";
+  $result = $conn->query($sql);
+}
+
+
+
 ?>
 
 <!DOCTYPE html>

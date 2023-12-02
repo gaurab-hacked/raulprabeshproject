@@ -65,6 +65,13 @@ if (isset($_GET['delete'])) {
   }
 }
 
+if (isset($_GET['search'])) {
+  $search = $_GET['search'];
+  $sql = "SELECT id, category, date FROM category WHERE category LIKE '%$search%'";
+  $result = $conn->query($sql);
+}
+
+
 $conn->close();
 ?>
 

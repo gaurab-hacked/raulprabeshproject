@@ -203,8 +203,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["createProduct"])) {
   }
 }
 
-
-
+if (isset($_GET['search'])) {
+  $search = $_GET['search'];
+  // Your SQL query
+  $sqlProduct = "SELECT c.category AS category, c.id AS categoryId, s.subcategory AS subcategory, s.id AS subcategoryId,
+p.id AS productId, p.name AS productName, p.description AS productDescription, 
+ p.image, p.date, p.userId, p.id AS id, p.phnumber AS phnumber, p.address AS address
+FROM
+producttable AS p
+LEFT JOIN
+category AS c ON c.id = p.categoryId
+LEFT JOIN
+subcategory AS s ON s.id = p.subcategoryId
+ WHERE p.name LIKE '%$search%'
+";
+  $resultProduct = $conn->query($sqlProduct);
+}
 
 
 ?>

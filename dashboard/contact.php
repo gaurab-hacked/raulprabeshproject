@@ -46,6 +46,16 @@ if (isset($_GET["view"])) {
 }
 
 
+if (isset($_GET['search'])) {
+  $search = $_GET['search'];
+  // Your SQL query
+  $sql = "SELECT * FROM contact WHERE title LIKE '%$search%'";
+
+  $result = $conn->query($sql);
+}
+
+
+
 ?>
 
 <!DOCTYPE html>

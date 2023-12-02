@@ -83,6 +83,25 @@ if (isset($_GET['delete'])) {
   }
 }
 
+if (isset($_GET['search'])) {
+  $search = $_GET['search'];
+  $sqlsubcategory = "
+    SELECT
+        c.category AS category,
+        s.subcategory AS subcategory,
+        s.date AS date,
+        s.id AS id
+    FROM
+        subcategory AS s
+    JOIN
+        category AS c ON s.categoryId = c.id WHERE s.subcategory LIKE '%$search%'
+";
+
+  $resultsubcategory = $conn->query($sqlsubcategory);
+
+}
+
+
 $conn->close();
 ?>
 
