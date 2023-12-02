@@ -267,6 +267,25 @@ if (isset($_GET['logout'])) {
             // Prevent the click event from reaching the outer layer
             event.stopPropagation();
         });
+
+        var currentTime = new Date();
+        var hours = currentTime.getHours();
+
+        var greeting;
+
+        if (hours < 12) {
+            greeting = "Good Morning";
+        } else if (hours < 18) {
+            greeting = "Good Afternoon";
+        } else {
+            greeting = "Good Evening";
+        }
+
+        // Get the element with id "Greeting" and update its content
+        var greetingElement = document.getElementById("Greeting");
+        if (greetingElement) {
+            greetingElement.innerHTML = "Hello Admin, " + greeting + "!!!";
+        }
     </script>
 </body>
 
