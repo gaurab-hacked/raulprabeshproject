@@ -15,7 +15,7 @@ if ($conn->connect_error) {
 // Your SQL query
 $sqlProduct = "SELECT c.category AS category, c.id AS categoryId, s.subcategory AS subcategory, s.id AS subcategoryId,
                       p.id AS productId, p.name AS productName, p.description AS productDescription, 
-                      p.isOrdered, p.image, p.date, p.userId, p.id AS id
+                       p.image, p.date, p.userId, p.id AS id, p.phnumber AS phnumber, p.address AS address
                       FROM
     producttable AS p
 LEFT JOIN
@@ -33,7 +33,7 @@ if (isset($_GET['service'])) {
   // Your SQL query
   $sqlProduct = "SELECT c.category AS category, c.id AS categoryId, s.subcategory AS subcategory, s.id AS subcategoryId,
       p.id AS productId, p.name AS productName, p.description AS productDescription, 
-      p.isOrdered, p.image, p.date, p.userId, p.id AS id
+      p.image, p.date, p.userId, p.id AS id, p.phnumber AS 
       FROM
       producttable AS p
       LEFT JOIN
@@ -54,7 +54,7 @@ if (isset($_GET['search'])) {
   // Your SQL query
   $sqlProduct = "SELECT c.category AS category, c.id AS categoryId, s.subcategory AS subcategory, s.id AS subcategoryId,
                       p.id AS productId, p.name AS productName, p.description AS productDescription, 
-                      p.isOrdered, p.image, p.date, p.userId, p.id AS id
+                       , p.image, p.date, p.userId, p.id AS id, p.phnumber AS phnumber, p.address AS address
                       FROM
     producttable AS p
 LEFT JOIN
@@ -62,7 +62,7 @@ LEFT JOIN
 LEFT JOIN
     subcategory AS s ON s.id = p.subcategoryId
 WHERE
-    p.name LIKE '%$searchContent%' 
+    p.name LIKE '%$searchContent%'
     ";
 
   // Perform the query
@@ -81,8 +81,8 @@ $resultSubcategory = $conn->query($sqlSubcategory);
 
 <head>
   <title>Job Descriptions</title>
-  <link rel="stylesheet" href="./style111.css">
-  <link rel="stylesheet" href="./Services.css">
+  <link rel="stylesheet" href="./css/style111.css">
+  <link rel="stylesheet" href="./css/Service.css">
   <style>
     .dropdown-content {
       border-radius: 3px;
@@ -151,20 +151,27 @@ $resultSubcategory = $conn->query($sqlSubcategory);
         if ($resultProduct->num_rows > 0) {
           $serialNumber = 1;
           while ($row = $resultProduct->fetch_assoc()) {
+            $productDescription = $row['productDescription'];
+            $limitedDescription = strlen($productDescription) > 10 ? substr($productDescription, 0, 50) . '...' : $productDescription;
+
             echo '
-            <div class="card" style="max-width: 350px; height: 350px; overflow:hidden;">
-              <img  src="http://localhost/SahajSubidha/dashboard/' . $row['image'] . '">
-              <div class="card-content">
-              <div style="height: 115px; overflow: hidden;">
-                <h2 style="font-size: 19px;">' . $row['productName'] . '</h2>
-                <p>' . $row['productDescription'] . '</p>
-              </div>
-              <a href="?product-order=' . $row['id'] . '" class="order-btn">Order Now</a>
+        <div class="card" style="max-width: 350px; height: 350px; overflow:hidden;">
+            <img src="http://localhost/SahajSubidha/dashboard/' . $row['image'] . '">
+            <div class="card-content">
+                <div style="height: 115px; overflow: hidden;">
+                    <h2 style="font-size: 19px;">' . $row['productName'] . '</h2>
+                    <p>' . $limitedDescription . '</p>
+                    <div id="detail">
+                      <p>Number: ' . $row['phnumber'] . '</p>
+                      <p>Address: ' . $row['address'] . '</p>
+                    </div>
                 </div>
-              </div>
-              ';
+                <a href="./singleproduct.php?view-product=' . $row['id'] . '" class="order-btn">View More</a>
+            </div>
+        </div>';
           }
-        } ?>
+        }
+        ?>
       </div>
     </div>
 
