@@ -169,3 +169,61 @@ table {
 #modalHiddenBlock {
   display: none;
 }
+
+#containerContent {
+  display: flex;
+  gap: 40px;
+  flex-direction: column;
+}
+.cards {
+  min-height: 10vh;
+  width: 100%;
+  /* padding: 20px; */
+  display: flex;
+  justify-content: space-between;
+}
+.card {
+  height: 100px;
+  width: 24%;
+  border-radius: 5px;
+  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.3);
+}
+.containerCard {
+  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.3);
+  height: 100%;
+  width: 100%;
+}
+.card {
+  padding: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-decoration: none !important;
+}
+.card .left {
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+  flex-direction: column;
+}
+.card h2 {
+  font-weight: 600;
+  font-size: 20px;
+  letter-spacing: 1px;
+  color: rgba(0, 0, 0, 0.5);
+}
+.card h3 {
+  font-size: 30px;
+  color: rgba(0, 0, 0, 0.5);
+}
+.right {
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+  flex-direction: column;
+}
+.right svg {
+  height: 20px;
+  width: 20px;
+}
