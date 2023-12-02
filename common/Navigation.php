@@ -279,7 +279,7 @@ if (isset($_GET['logout'])) {
                                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, laboriosam?
                                 </p>
                                 <div id="buttons">
-                                    <div><a href="#">Your Orders</a></div>
+                                    <div><a href="./add.php">Your Posts</a></div>
                                     <div><a href="?logout=' . $userId . '" class="danger">Logout</a></div>
                                 </div>
                             </div>

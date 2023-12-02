@@ -82,24 +82,31 @@ if (isset($_GET['delete'])) {
             </tr>
           </thead>
           <tbody>
+
             <?php
             $num = 1;
 
             if ($result->num_rows > 0) {
               while ($row = $result->fetch_assoc()) {
+                $title = $row['title'];
+                $limitedTitle = strlen($title) > 10 ? substr($title, 0, 50) . '...' : $title;
+
+                $description = $row['description'];
+                $limitedDescription = strlen($description) > 10 ? substr($description, 0, 50) . '...' : $description;
+
                 echo '
-            <tr>
+                <tr>
                 <td>' . $num++ . '</td>
                 <td>' . $row['name'] . '</td>
                 <td>' . $row['email'] . '</td>
-                <td>' . $row['title'] . '</td>
-                <td>' . $row['description'] . '</td>
-                <td><a href="?delete=' . $row['id'] . '">' . file_get_contents("./svg/delete.svg") . '</a></td>
-            </tr>
-        ';
+                <td>' . $limitedTitle . '</td>
+            <td>' . $limitedDescription . '</td>
+            <td><a href="?delete=' . $row['id'] . '">' . file_get_contents("./svg/delete.svg") . '</a></td>
+        </tr>';
               }
             }
             ?>
+
 
           </tbody>
         </table>

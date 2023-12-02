@@ -195,7 +195,7 @@ WHERE
           $serialNumber = 1;
           while ($row = $resultProduct->fetch_assoc()) {
             $productDescription = $row['productDescription'];
-            $limitedDescription = strlen($productDescription) > 10 ? substr($productDescription, 0, 50) . '...' : $productDescription;
+            $limitedDescription = strlen($productDescription) > 50 ? substr($productDescription, 0, 50) . '...' : $productDescription;
 
             echo '
         <div class="card" style="max-width: 350px; height: 350px; overflow:hidden;">

@@ -31,6 +31,8 @@ if (isset($_GET['edit'])) {
     $productId = $row["id"];
     $title = $row["name"];
     $description = $row["description"];
+    $phnumber = $row["phnumber"];
+    $address = $row["address"];
   }
 }
 if (isset($_POST['updateProduct'])) {
@@ -229,7 +231,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["createProduct"])) {
         <li><a href="./category.php">Category</a></li>
         <li><a href="./subcategory.php">Subcategory</a></li>
         <li><a href="./products.php" class="active">Products</a></li>
-
         <li><a href="./contact.php">Messages</a></li>
         <li><a href="./users.php">Users</a></li>
       </ul>
@@ -270,11 +271,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["createProduct"])) {
             if ($resultProduct->num_rows > 0) {
               $serialNumber = 1;
               while ($row = $resultProduct->fetch_assoc()) {
+                $productName = $row['productName'];
+                $limitedProductName = strlen($productName) > 15 ? substr($productName, 0, 15) . '...' : $productName;
+
+                $productDescription = $row['productDescription'];
+                $limitedDescription = strlen($productDescription) > 25 ? substr($productDescription, 0, 25) . '...' : $productDescription;
+
                 echo '
         <tr>
             <td>' . $serialNumber++ . '</td>
-            <td>' . $row['productName'] . '</td>
-            <td>' . $row['productDescription'] . '</td>
+            <td>' . $limitedProductName . '</td>
+            <td>' . $limitedDescription . '</td>
             <td><img style="height: 35px; width: 35px; border-radius: 5px; object-fit: cover;"
                      src="http://localhost/SahajSubidha/dashboard/' . $row['image'] . '"
                      alt="' . $row['productName'] . '"></td>
@@ -288,6 +295,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["createProduct"])) {
               }
             }
             ?>
+
 
           </tbody>
         </table>
@@ -339,8 +347,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["createProduct"])) {
                 <input type="file" name="image" id="image" accept=".jpg, .jpeg, .png" placeholder="Product Image" />
               </div>
               <div class="flex">
-                <input type="number" name="phnumber" id="productphnumber" placeholder="Product phone number" />
-                <input type="text" name="address" id="address" placeholder="Product address" />
+                <input type="number" name="phnumber" id="productphnumber" placeholder="Product phone number"
+                  value="<?php echo htmlspecialchars($phnumber); ?>" />
+                <input type="text" name="address" id="address" placeholder="Product address"
+                  value="<?php echo htmlspecialchars($address); ?>" />
               </div>
               <textarea name="productDescription" id="description" cols="30"
                 rows="8"><?php echo htmlspecialchars($description); ?></textarea>
