@@ -33,7 +33,7 @@ if (isset($_GET['service'])) {
   // Your SQL query
   $sqlProduct = "SELECT c.category AS category, c.id AS categoryId, s.subcategory AS subcategory, s.id AS subcategoryId,
       p.id AS productId, p.name AS productName, p.description AS productDescription, 
-      p.image, p.date, p.userId, p.id AS id, p.phnumber AS 
+      p.image, p.date, p.userId, p.id AS id, p.phnumber, p.address
       FROM
       producttable AS p
       LEFT JOIN
@@ -51,23 +51,26 @@ if (isset($_GET['service'])) {
 if (isset($_GET['search'])) {
   $searchContent = $_GET['search'];
 
-  // Your SQL query
+  // Your SQL query with a prepared statement
   $sqlProduct = "SELECT c.category AS category, c.id AS categoryId, s.subcategory AS subcategory, s.id AS subcategoryId,
-                      p.id AS productId, p.name AS productName, p.description AS productDescription, 
-                       , p.image, p.date, p.userId, p.id AS id, p.phnumber AS phnumber, p.address AS address
-                      FROM
-    producttable AS p
-LEFT JOIN
-    category AS c ON c.id = p.categoryId
-LEFT JOIN
-    subcategory AS s ON s.id = p.subcategoryId
-WHERE
-    p.name LIKE '%$searchContent%'
-    ";
+                        p.id AS productId, p.name AS productName, p.description AS productDescription, 
+                        p.image, p.date, p.userId, p.id AS id, p.phnumber, p.address
+                  FROM producttable AS p
+                  LEFT JOIN category AS c ON c.id = p.categoryId
+                  LEFT JOIN subcategory AS s ON s.id = p.subcategoryId
+                  WHERE p.name LIKE ?";
 
-  // Perform the query
-  $resultProduct = $conn->query($sqlProduct);
+  // Prepare the statement
+  $stmt = $conn->prepare($sqlProduct);
+
+  // Bind the parameter and execute
+  $stmt->bind_param("s", $searchContent);
+  $stmt->execute();
+
+  // Get the result
+  $resultProduct = $stmt->get_result();
 }
+
 
 $sqlSubcategory = "SELECT sub.* FROM subcategory sub JOIN category cat ON sub.categoryId = cat.id WHERE cat.category LIKE '%services%'";
 
